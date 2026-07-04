@@ -22,11 +22,7 @@ public class ProductBasket {
     public int getFullCost() {
         int fullCost = 0;
         for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null && i == 0) {
-                break;
-            } else if (basket[i] == null) {
-                break;
-            } else {
+            if (basket[i] != null) {
                 fullCost = fullCost + basket[i].getPrice();
             }
         }
@@ -36,18 +32,15 @@ public class ProductBasket {
     public void printBasket() {
         int fullCost = 0;
         for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null && i == 0) {
-                System.out.println("в корзине пусто");
-                break;
-            } else if (basket[i] == null) {
-                break;
-            } else {
+            if (basket[i] != null) {
                 System.out.println(basket[i].getName() + ": " + basket[i].getPrice());
                 fullCost = fullCost + basket[i].getPrice();
             }
         }
         if (fullCost != 0) {
             System.out.println("Итого: " + fullCost);
+        } else {
+            System.out.println("в корзине пусто");
         }
 
     }
@@ -55,13 +48,10 @@ public class ProductBasket {
     public boolean findProductName(String productName) {
         boolean check = false;
         for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null && i == 0) {
-                break;
-            }
-            if (basket[i] == null) {
-                break;
-            } else if (basket[i].getName() == productName) {
-                check = true;
+            if (basket[i] != null) {
+                if (productName.equals(basket[i].getName())) {
+                    check = true;
+                }
             }
         }
         return check;
@@ -71,7 +61,7 @@ public class ProductBasket {
         for (int i = 0; i < basket.length; i++) {
             if (basket[i] != null) {
                 basket[i] = null;
-            } else break;
+            }
         }
     }
 
