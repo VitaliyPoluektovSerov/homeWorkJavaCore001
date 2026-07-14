@@ -33,12 +33,13 @@ public class ProductBasket {
         int fullCost = 0;
         for (int i = 0; i < basket.length; i++) {
             if (basket[i] != null) {
-                System.out.println(basket[i].getName() + ": " + basket[i].getPrice());
+                System.out.println(basket[i]);
                 fullCost = fullCost + basket[i].getPrice();
             }
         }
         if (fullCost != 0) {
             System.out.println("Итого: " + fullCost);
+            System.out.println("Специальных товаров: " + specialProductOfBasket());
         } else {
             System.out.println("в корзине пусто");
         }
@@ -63,6 +64,18 @@ public class ProductBasket {
                 basket[i] = null;
             }
         }
+    }
+
+    public int specialProductOfBasket() {
+        int isSpecial = 0;
+        for (int i = 0; i < basket.length; i++) {
+            if (basket[i] != null) {
+                if (basket[i].isSpecial()) {
+                    isSpecial++;
+                }
+            }
+        }
+        return isSpecial;
     }
 
 }
