@@ -1,10 +1,10 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.Searchable.SearchEngine;
+import org.skypro.skyshop.Searchable.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.DiscountedProduct;
-import org.skypro.skyshop.product.FixPriceProduct;
-import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.product.*;
+import org.skypro.skyshop.exception.BestResultNotFound;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -23,6 +23,22 @@ public class Main {
         FixPriceProduct prod8 = new FixPriceProduct("Лапша");
         SimpleProduct prod9 = new SimpleProduct("Арбуз", 56);
         SimpleProduct prod10 = new SimpleProduct("Макароны", 44);
+        try {
+            SimpleProduct prod11 = new SimpleProduct("    ", 66);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        try {
+            SimpleProduct prod11 = new SimpleProduct("Продукт ", -1);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        try {
+            DiscountedProduct prod11 = new DiscountedProduct("Икра", 200, 101);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+
 
         // добавляем 4 продукта
         ProductBasket prodBasket = new ProductBasket();
@@ -52,5 +68,59 @@ public class Main {
         prodBasket.printBasket();
         System.out.println(prodBasket.getFullCost());
         System.out.println(prodBasket.findProductName("Виноград"));
+
+        SearchEngine search = new SearchEngine(15);
+        search.add(prod1);
+        search.add(prod2);
+        search.add(prod3);
+        search.add(prod4);
+        search.add(prod5);
+        search.add(prod6);
+        search.add(prod7);
+        search.add(prod8);
+        search.add(prod9);
+        search.add(prod10);
+        Article art1 = new Article("Шапка", "Черная, шерсть, с козырьком");
+        Article art2 = new Article("Футболка", "Красная, хлопок");
+        Article art3 = new Article("Платье", "Розовой, шелковое, в пол");
+        Article art4 = new Article("Майка", "Белая, хлопок");
+        Article art5 = new Article("Пальто", "Черное, шерсть, по пояс");
+        search.add(art1);
+        search.add(art2);
+        search.add(art3);
+        search.add(art4);
+        search.add(art5);
+
+        try {
+            Searchable result = search.searchBestResult("Ма");
+            System.out.println("Результаты поиска для 'Ма': " + result);
+        } catch (BestResultNotFound e) {
+            System.out.println(e);
+        }
+
+        try {
+            Searchable result = search.searchBestResult("Футо");
+            System.out.println("Результаты поиска для 'Футо': " + result);
+        } catch (BestResultNotFound e) {
+            System.out.println(e);
+        }
+
+
+        Searchable[] results = search.search("Лапша");
+        System.out.println("Результаты поиска для 'Лапша'");
+        for (Searchable element : results) {
+            if (element != null) {
+                System.out.println(element.getStringRepresentation());
+            }
+        }
+
+        results = search.search("Пальто");
+        System.out.println("Результаты поиска для 'Пальто'");
+        for (Searchable element : results) {
+            if (element != null) {
+                System.out.println(element.getStringRepresentation());
+            }
+        }
+
     }
 }
