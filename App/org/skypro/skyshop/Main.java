@@ -4,6 +4,7 @@ import org.skypro.skyshop.Searchable.SearchEngine;
 import org.skypro.skyshop.Searchable.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
+import org.skypro.skyshop.exception.BestResultNotFound;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -22,6 +23,22 @@ public class Main {
         FixPriceProduct prod8 = new FixPriceProduct("Лапша");
         SimpleProduct prod9 = new SimpleProduct("Арбуз", 56);
         SimpleProduct prod10 = new SimpleProduct("Макароны", 44);
+        try {
+            SimpleProduct prod11 = new SimpleProduct("    ", 66);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        try {
+            SimpleProduct prod11 = new SimpleProduct("Продукт ", -1);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        try {
+            DiscountedProduct prod11 = new DiscountedProduct("Икра", 200, 101);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+
 
         // добавляем 4 продукта
         ProductBasket prodBasket = new ProductBasket();
@@ -73,6 +90,21 @@ public class Main {
         search.add(art3);
         search.add(art4);
         search.add(art5);
+
+        try {
+            Searchable result = search.searchBestResult("Ма");
+            System.out.println("Результаты поиска для 'Ма': " + result);
+        } catch (BestResultNotFound e) {
+            System.out.println(e);
+        }
+
+        try {
+            Searchable result = search.searchBestResult("Футо");
+            System.out.println("Результаты поиска для 'Футо': " + result);
+        } catch (BestResultNotFound e) {
+            System.out.println(e);
+        }
+
 
         Searchable[] results = search.search("Лапша");
         System.out.println("Результаты поиска для 'Лапша'");
