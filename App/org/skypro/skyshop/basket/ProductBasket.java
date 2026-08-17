@@ -2,28 +2,40 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-public class ProductBasket {
-    private Product[] basket;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-    public ProductBasket() {
-        this.basket = new Product[5];
+public class ProductBasket {
+    List<Product> basket = new LinkedList<>();
+
+    //public ProductBasket() {
+    //  this.basket = new Product[5];
+    //}
+
+    public List<Product> deleteProductByName(String name) {
+        List<Product> deleteProduct = new LinkedList<>();
+        Iterator<Product> iterator = basket.iterator();
+        while (iterator.hasNext()){
+            Product product = iterator.next();
+            if (product.getName().equals(name)){
+                deleteProduct.add(product);
+                iterator.remove();
+            }
+        }
+    return deleteProduct;
     }
 
     public void addProduct(Product product) {
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null) {
-                basket[i] = product;
-                break;
-            }
-            if (i == basket.length - 1) System.out.println("Невозможно добавить продукт.");
-        }
+        basket.add(product);
     }
+
 
     public int getFullCost() {
         int fullCost = 0;
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] != null) {
-                fullCost = fullCost + basket[i].getPrice();
+        for (Product e : basket) {
+            if (e != null) {
+                fullCost = fullCost + e.getPrice();
             }
         }
         return fullCost;
@@ -31,10 +43,10 @@ public class ProductBasket {
 
     public void printBasket() {
         int fullCost = 0;
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] != null) {
-                System.out.println(basket[i]);
-                fullCost = fullCost + basket[i].getPrice();
+        for (Product e : basket) {
+            if (e != null) {
+                System.out.println(e);
+                fullCost = fullCost + e.getPrice();
             }
         }
         if (fullCost != 0) {
@@ -48,9 +60,9 @@ public class ProductBasket {
 
     public boolean findProductName(String productName) {
         boolean check = false;
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] != null) {
-                if (productName.equals(basket[i].getName())) {
+        for (Product e : basket) {
+            if (e != null) {
+                if (productName.equals(e.getName())) {
                     check = true;
                 }
             }
@@ -59,18 +71,18 @@ public class ProductBasket {
     }
 
     public void clearBasket() {
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] != null) {
-                basket[i] = null;
+        for (Product e : basket) {
+            if (e != null) {
+                e = null;
             }
         }
     }
 
     public int specialProductOfBasket() {
         int isSpecial = 0;
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] != null) {
-                if (basket[i].isSpecial()) {
+        for (Product e : basket) {
+            if (e != null) {
+                if (e.isSpecial()) {
                     isSpecial++;
                 }
             }

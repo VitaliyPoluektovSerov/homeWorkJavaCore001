@@ -6,6 +6,8 @@ import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
 import org.skypro.skyshop.exception.BestResultNotFound;
 
+import java.util.List;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -69,7 +71,7 @@ public class Main {
         System.out.println(prodBasket.getFullCost());
         System.out.println(prodBasket.findProductName("Виноград"));
 
-        SearchEngine search = new SearchEngine(15);
+        SearchEngine search = new SearchEngine();
         search.add(prod1);
         search.add(prod2);
         search.add(prod3);
@@ -106,20 +108,24 @@ public class Main {
         }
 
 
-        Searchable[] results = search.search("Лапша");
-        System.out.println("Результаты поиска для 'Лапша'");
-        for (Searchable element : results) {
-            if (element != null) {
-                System.out.println(element.getStringRepresentation());
-            }
+        System.out.println("Демонстрация удаления из карзины.");
+        System.out.println("-----   Корзина до удаления");
+        prodBasket.printBasket();
+        System.out.println("-----   список удаленных");
+        List<Product> deleteProducts001 = prodBasket.deleteProductByName("Банан");
+        if (deleteProducts001.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println("Удалённые продукты:" + deleteProducts001);
         }
-
-        results = search.search("Пальто");
-        System.out.println("Результаты поиска для 'Пальто'");
-        for (Searchable element : results) {
-            if (element != null) {
-                System.out.println(element.getStringRepresentation());
-            }
+        System.out.println("-----   Корзина после удаления");
+        prodBasket.printBasket();
+        System.out.println("-----   удаляем не существующий");
+        List<Product> deleteProducts002 = prodBasket.deleteProductByName("ББББ");
+        if (deleteProducts002.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println("Удалённые продукты:" + deleteProducts002);
         }
 
     }

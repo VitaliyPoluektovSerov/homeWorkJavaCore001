@@ -1,12 +1,16 @@
 package org.skypro.skyshop.Searchable;
-import  org.skypro.skyshop.exception.BestResultNotFound;
+
+import org.skypro.skyshop.exception.BestResultNotFound;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchEngine {
-    private Searchable[] products;
+    LinkedList<Searchable> products;
     private int count;
 
-    public SearchEngine (int size) {
-        products = new Searchable[size];
+    public SearchEngine() {
+        products = new LinkedList<>();
         count = 0;
     }
 
@@ -37,16 +41,11 @@ public class SearchEngine {
     }
 
 
-    public Searchable[] search(String searchTerm) {
-        Searchable[] result = new Searchable[5];
-        int foundCount =0;
+    public List<Searchable> search(String searchTerm) {
+        List<Searchable> result = new LinkedList<>();
         for (Searchable element : products) {
             if (element != null && element.searchTerm().contains(searchTerm)) {
-                result[foundCount] = element;
-                foundCount++;
-                if (foundCount == 5) {
-                    break;
-                }
+                result.add(element);
             }
         }
         return result;
@@ -54,11 +53,7 @@ public class SearchEngine {
 
 
     public void add(Searchable product) {
-        if (count == products.length) {
-            return;
-        }
-        products[count] = product;
-        count++;
+        products.add(product);
     }
 
     public void getSearchTerm(String search) {
