@@ -1,25 +1,29 @@
 package org.skypro.skyshop.Searchable;
 
 import org.skypro.skyshop.exception.BestResultNotFound;
+import org.skypro.skyshop.product.Product;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SearchEngine {
-    LinkedList<Searchable> products;
+    TreeMap<String, Searchable> products;
     private int count;
 
     public SearchEngine() {
-        products = new LinkedList<>();
+        products = new TreeMap<>();
         count = 0;
     }
 
     public Searchable searchBestResult(String search) throws BestResultNotFound {
         int maxCount = 0;
         Searchable bestResult = null;
-        for (Searchable element : products) {
-            if (element != null) {
-                String term = element.searchTerm();
+        for (Map.Entry<String, Searchable> entry : products.entrySet()) {
+            Searchable product = entry.getValue();
+            if (product != null) {
+                String term = product.searchTerm();
                 int count = 0;
                 int index = 0;
                 int indexSubstring = term.indexOf(search, index);
@@ -30,8 +34,9 @@ public class SearchEngine {
                 }
                 if (count > maxCount) {
                     maxCount = count;
-                    bestResult = element;
+                    bestResult = product;
                 }
+
             }
         }
         if (bestResult == null) {
@@ -43,9 +48,9 @@ public class SearchEngine {
 
     public List<Searchable> search(String searchTerm) {
         List<Searchable> result = new LinkedList<>();
-        for (Searchable element : products) {
-            if (element != null && element.searchTerm().contains(searchTerm)) {
-                result.add(element);
+        for (Map.Entry<String, Searchable> e : products.entrySet()) {
+            if (e.getKey().contains(searchTerm)) {
+                result.add(e.getValue());
             }
         }
         return result;
@@ -53,7 +58,7 @@ public class SearchEngine {
 
 
     public void add(Searchable product) {
-        products.add(product);
+        products.put(product.searchTerm(), product);
     }
 
     public void getSearchTerm(String search) {
