@@ -59,7 +59,7 @@ public class Main {
         // печать содержимого корзины
         prodBasket.printBasket();
 
-        // проверка метода проверяющего в корзине по имени
+        System.out.println("проверка метода проверяющего в корзине по имени");
         System.out.println(prodBasket.findProductName("Виноград"));
         System.out.println(prodBasket.findProductName("Виноград-"));
 
@@ -73,14 +73,25 @@ public class Main {
 
         SearchEngine search = new SearchEngine();
         search.add(prod1);
+        search.add(prod1);
+        search.add(prod2);
         search.add(prod2);
         search.add(prod3);
+        search.add(prod3);
+        search.add(prod4);
         search.add(prod4);
         search.add(prod5);
+        search.add(prod5);
+        search.add(prod6);
+        search.add(prod6);
         search.add(prod6);
         search.add(prod7);
+        search.add(prod7);
+        search.add(prod8);
         search.add(prod8);
         search.add(prod9);
+        search.add(prod9);
+        search.add(prod10);
         search.add(prod10);
         Article art1 = new Article("Шапка", "Черная, шерсть, с козырьком");
         Article art2 = new Article("Футболка", "Красная, хлопок");
@@ -88,9 +99,14 @@ public class Main {
         Article art4 = new Article("Майка", "Белая, хлопок");
         Article art5 = new Article("Пальто", "Черное, шерсть, по пояс");
         search.add(art1);
+        search.add(art1);
+        search.add(art2);
         search.add(art2);
         search.add(art3);
+        search.add(art3);
         search.add(art4);
+        search.add(art4);
+        search.add(art5);
         search.add(art5);
 
         try {
@@ -128,5 +144,6 @@ public class Main {
             System.out.println("Удалённые продукты:" + deleteProducts002);
         }
 
+        System.out.println("ищем вхождение в наименование продуктов ин - и выводим отсортированными значениями" + search.search("ин").values());
     }
 }

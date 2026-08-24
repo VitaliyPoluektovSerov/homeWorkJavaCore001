@@ -23,7 +23,7 @@ public class SearchEngine {
         for (Map.Entry<String, Searchable> entry : products.entrySet()) {
             Searchable product = entry.getValue();
             if (product != null) {
-                String term = product.searchTerm();
+                String term = product.getName();
                 int count = 0;
                 int index = 0;
                 int indexSubstring = term.indexOf(search, index);
@@ -46,11 +46,12 @@ public class SearchEngine {
     }
 
 
-    public List<Searchable> search(String searchTerm) {
-        List<Searchable> result = new LinkedList<>();
+
+    public TreeMap<String, Searchable> search(String searchTerm) {
+        TreeMap<String, Searchable> result = new TreeMap<>();
         for (Map.Entry<String, Searchable> e : products.entrySet()) {
             if (e.getKey().contains(searchTerm)) {
-                result.add(e.getValue());
+                result.putIfAbsent(e.getKey(), e.getValue());
             }
         }
         return result;
