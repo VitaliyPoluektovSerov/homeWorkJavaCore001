@@ -3,27 +3,24 @@ package org.skypro.skyshop.Searchable;
 import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchEngine {
-    TreeMap<String, Searchable> products;
+    Set<Searchable> products;
     private int count;
 
     public SearchEngine() {
-        products = new TreeMap<>();
+        products = new HashSet<>();
         count = 0;
     }
 
-    public Searchable searchBestResult(String search) throws BestResultNotFound {
+    public Set searchBestResult(String search) throws BestResultNotFound {
         int maxCount = 0;
-        Searchable bestResult = null;
-        for (Map.Entry<String, Searchable> entry : products.entrySet()) {
-            Searchable product = entry.getValue();
-            if (product != null) {
-                String term = product.getName();
+        //Searchable bestResult = null;
+        Set<Searchable> bestResult = new HashSet<>();
+        for (Searchable entry : products) {
+            if (entry != null) {
+                String term = entry.getName();
                 int count = 0;
                 int index = 0;
                 int indexSubstring = term.indexOf(search, index);
@@ -34,7 +31,7 @@ public class SearchEngine {
                 }
                 if (count > maxCount) {
                     maxCount = count;
-                    bestResult = product;
+                    bestResult.add(entry);
                 }
 
             }
@@ -46,20 +43,31 @@ public class SearchEngine {
     }
 
 
-
-    public TreeMap<String, Searchable> search(String searchTerm) {
-        TreeMap<String, Searchable> result = new TreeMap<>();
-        for (Map.Entry<String, Searchable> e : products.entrySet()) {
-            if (e.getKey().contains(searchTerm)) {
-                result.putIfAbsent(e.getKey(), e.getValue());
+    public Set search(String searchTerm) {
+        Set<Searchable> result = new TreeSet<>(new SearchableComparator());
+        for (Searchable searchable : products) {
+            if (searchable.getName().contains(searchTerm)) {
+                result.add(searchable);
             }
         }
         return result;
     }
 
+    public static class SearchableComparator implements Comparator<Searchable> {
+        @Override
+        public int compare(Searchable s1, Searchable s2) {
+            int lengthCompare = Integer.compare(s2.getName().length(), s1.getName().length());
+            if (lengthCompare != 0) {
+                return lengthCompare;
+            }
+            return s1.getName().compareTo(s2.getName());
+        }
+    }
+
+
 
     public void add(Searchable product) {
-        products.put(product.searchTerm(), product);
+        products.add(product);
     }
 
     public void getSearchTerm(String search) {

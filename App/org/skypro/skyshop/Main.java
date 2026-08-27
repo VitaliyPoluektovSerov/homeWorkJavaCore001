@@ -6,7 +6,9 @@ import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
 import org.skypro.skyshop.exception.BestResultNotFound;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -110,14 +112,16 @@ public class Main {
         search.add(art5);
 
         try {
-            Searchable result = search.searchBestResult("Ма");
+            Set<Searchable> result = new HashSet<>();
+            result = search.searchBestResult("Ма");
             System.out.println("Результаты поиска для 'Ма': " + result);
         } catch (BestResultNotFound e) {
             System.out.println(e);
         }
 
         try {
-            Searchable result = search.searchBestResult("Футо");
+            Set<Searchable> result = new HashSet<>();
+            result = search.searchBestResult("Футо");
             System.out.println("Результаты поиска для 'Футо': " + result);
         } catch (BestResultNotFound e) {
             System.out.println(e);
@@ -144,6 +148,6 @@ public class Main {
             System.out.println("Удалённые продукты:" + deleteProducts002);
         }
 
-        System.out.println("ищем вхождение в наименование продуктов ин - и выводим отсортированными значениями" + search.search("ин").values());
+        System.out.println("ищем вхождение в наименование продуктов ин - и выводим отсортированными значениями" + search.search("ин"));
     }
 }
