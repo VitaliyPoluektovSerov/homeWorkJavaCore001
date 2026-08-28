@@ -36,7 +36,7 @@ public class SearchEngine {
 
             }
         }
-        if (bestResult == null) {
+        if (bestResult == null || bestResult.isEmpty()) {
             throw new BestResultNotFound(search);
         }
         return bestResult;
@@ -46,7 +46,7 @@ public class SearchEngine {
     public Set search(String searchTerm) {
         Set<Searchable> result = new TreeSet<>(new SearchableComparator());
         for (Searchable searchable : products) {
-            if (searchable.getName().contains(searchTerm)) {
+            if (searchable.searchTerm().contains(searchTerm)) {
                 result.add(searchable);
             }
         }
