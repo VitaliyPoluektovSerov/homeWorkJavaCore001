@@ -56,9 +56,11 @@ public class Main {
 
 
         // подсчет стоимости корзины и вывод ее в терминал
+        System.out.println("--==Цена всего содержимого корзины==--");
         System.out.println(prodBasket.getFullCost());
 
         // печать содержимого корзины
+        System.out.println("--==Содержимое корзины==--");
         prodBasket.printBasket();
 
         System.out.println("проверка метода проверяющего в корзине по имени");
@@ -66,9 +68,10 @@ public class Main {
         System.out.println(prodBasket.findProductName("Виноград-"));
 
         // очистка корзины
-        prodBasket.clearBasket();
+        //prodBasket.clearBasket();
 
         //смотрим на результат
+
         prodBasket.printBasket();
         System.out.println(prodBasket.getFullCost());
         System.out.println(prodBasket.findProductName("Виноград"));
