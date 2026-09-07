@@ -53,7 +53,7 @@ public class ProductBasket {
     }
 
     public void printBasket() {
-        int fullCost = 0;
+        long fullCost = 0;
 //        for (Map.Entry<String, List<Product>> entry : basket.entrySet()) {
 //            List<Product> products = entry.getValue();
 //            for (Product product : products) {
@@ -63,9 +63,11 @@ public class ProductBasket {
 //                }
 //            }
 //        }
-        fullCost = (int) basket.values().stream()
+        basket.values().stream()
                 .flatMap(Collection::stream)
-                .peek(System.out::println)
+                .forEach(System.out::println);
+        fullCost = basket.values().stream()
+                .flatMap(Collection::stream)
                 .mapToInt(Product::getPrice)
                 .sum();
         if (fullCost != 0) {
@@ -103,7 +105,7 @@ public class ProductBasket {
         basket.clear();
     }
 
-    public int specialProductOfBasket() {
+    private long specialProductOfBasket() {
 //        int isSpecial = 0;
 //        for (Map.Entry<String, List<Product>> entry : basket.entrySet()) {
 //            List<Product> products = entry.getValue();
@@ -116,7 +118,7 @@ public class ProductBasket {
 //            }
 //        }
 //        return isSpecial;
-        return (int) basket.values().stream()
+        return basket.values().stream()
                 .flatMap(Collection::stream)
                 .filter(Product::isSpecial)
                 .count();
